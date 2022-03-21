@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    postgres:
+      master:
+        driver-class-name: org.postgresql.Driver
+        jdbc-url: jdbc:postgresql://localhost:5445/postgres?stringtype=unspecified
+        username: postgres
+        password: password
+      slave:
+        driver-class-name: org.postgresql.Driver
+        jdbc-url: jdbc:postgresql://localhost:5446/postgres?stringtype=unspecified
+        username: postgres
+        password: password

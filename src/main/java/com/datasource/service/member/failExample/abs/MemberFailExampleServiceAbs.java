@@ -47,4 +47,12 @@ public abstract class MemberFailExampleServiceAbs implements MemberFailExampleSe
     public Member findId(String id) {
         return this.memberReadMapper.findId(id);
     }
+
+    /**
+     * {@link MemberReadService#findName(String)}
+     */
+    @Override
+    public Member findName(String name) {
+        return this.memberReadMapper.findName(name);
+    }
 }

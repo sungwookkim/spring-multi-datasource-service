@@ -18,4 +18,14 @@ public interface MemberReadService {
      * @return id로 조회된 회원 정보
      */
     Member findId(String id);
+
+    /**
+     * <pre>
+     *     회원 이름으로 회원 검색하는 메서드
+     * </pre>
+     *
+     * @param name 회원 정보를 조회하고자 하는 회원 이름
+     * @return 이름으로 조회된 회원 정보
+     */
+    Member findName(String name);
 }

@@ -40,4 +40,13 @@ public class MemberReadOnlyFailExampleService extends MemberFailExampleServiceAb
     public Member findId(String id) {
         return super.findId(id);
     }
+
+    /**
+     * {@link MemberFailExampleServiceAbs#findName(String)}
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Member findName(String name) {
+        return super.findName(name);
+    }
 }

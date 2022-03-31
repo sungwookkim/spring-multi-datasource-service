@@ -37,4 +37,13 @@ public class MemberPropagationFailExampleService extends MemberFailExampleServic
     public Member findId(String id) {
         return super.findId(id);
     }
+
+    /**
+     * {@link MemberFailExampleServiceAbs#findName(String)}
+     */
+    @Override
+    @Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
+    public Member findName(String name) {
+        return super.findName(name);
+    }
 }

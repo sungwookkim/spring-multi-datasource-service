@@ -4,7 +4,6 @@ import com.datasource.entity.member.Member;
 import com.datasource.repo.core.member.write.MemberWrite;
 import com.datasource.service.member.MemberReadService;
 import com.datasource.service.member.MemberWriteService;
-import com.datasource.service.member.successExample.read.MemberSuccessExampleReadService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,12 +17,12 @@ import java.util.Optional;
 @Service
 public class MemberSuccessExampleWriteService implements MemberWriteService {
     private final MemberWrite memberWriteMapper;
-    private final MemberReadService memberSuccessExampleReadService;
+    private final MemberReadService memberSuccessExampleSlaveReadService;
 
     public MemberSuccessExampleWriteService(MemberWrite memberWriteMapper
-            , MemberReadService memberSuccessExampleReadService) {
+            , MemberReadService memberSuccessExampleSlaveReadService) {
         this.memberWriteMapper = memberWriteMapper;
-        this.memberSuccessExampleReadService = memberSuccessExampleReadService;
+        this.memberSuccessExampleSlaveReadService = memberSuccessExampleSlaveReadService;
     }
 
     /**
@@ -33,7 +32,7 @@ public class MemberSuccessExampleWriteService implements MemberWriteService {
     @Transactional(rollbackFor = {Exception.class})
     public void save(Member member) {
         // 해당 메서드 호출 시 정상적인 설정이라면 slave 트랜잭션이 발생 되어야 한다.
-        Member findMember = Optional.ofNullable(this.memberSuccessExampleReadService.findId(member.getId()))
+        Member findMember = Optional.ofNullable(this.memberSuccessExampleSlaveReadService.findId(member.getId()))
                 .orElseGet(Member::defaultObj);
 
         Optional.ofNullable(findMember.getId())

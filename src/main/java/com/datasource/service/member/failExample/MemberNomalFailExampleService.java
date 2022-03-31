@@ -37,4 +37,13 @@ public class MemberNomalFailExampleService extends MemberFailExampleServiceAbs i
     public Member findId(String id) {
         return super.findId(id);
     }
+
+    /**
+     * {@link MemberFailExampleServiceAbs#findName(String)}
+     */
+    @Override
+    @Transactional(rollbackFor = {Exception.class})
+    public Member findName(String name) {
+        return super.findName(name);
+    }
 }

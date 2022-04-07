@@ -28,13 +28,24 @@ class DatasourceApplicationTests {
 
 
 	@Autowired
-	MemberWriteService memberSuccessExampleWriteService;
+	MemberWriteService memberSuccessExampleSlaveReadWriteService;
+
+	@Autowired
+	MemberWriteService memberSuccessExampleMasterReadWriteService;
+
+	@Autowired
+	MemberWriteService memberSuccessExampleDecoratorWriteService;
+
 
 	@Autowired
 	MemberReadService memberSuccessExampleSlaveReadService;
 
 	@Autowired
 	MemberReadService memberSuccessExampleMasterReadService;
+
+	@Autowired
+	MemberReadService memberSuccessExampleDecoratorService;
+
 
 	@Autowired
 	MemberSuccessExampleFactory memberSuccessExampleFactory;
@@ -139,7 +150,7 @@ class DatasourceApplicationTests {
 	void 회원가입성공_읽기_쓰기가_다른_클래스에_있는_성공_예제_class() {
 		Member member = new Member("data_id_4", "data_name_1", 40);
 
-		this.saveMemberTest(this.memberSuccessExampleWriteService, member);
+		this.saveMemberTest(this.memberSuccessExampleSlaveReadWriteService, member);
 	}
 
 	@Test
@@ -147,7 +158,7 @@ class DatasourceApplicationTests {
 		Member member = new Member("data_id_1", "data_name_1", 40);
 
 		Assertions.assertThrows(IllegalStateException.class, () -> {
-			this.saveMemberTest(this.memberSuccessExampleWriteService, member);
+			this.saveMemberTest(this.memberSuccessExampleSlaveReadWriteService, member);
 		});
 	}
 
@@ -155,7 +166,7 @@ class DatasourceApplicationTests {
 	 * Read/Write 클래스 분리 테스트(master 트랜잭션 사용)
 	 */
 	@Test
-	void 회원조회_읽기_쓰기가_다른_클래스에_있는_성공_예제_class_master() {
+	void 회원조회_읽기_쓰기가_다른_클래스에_있는_성공_예제_master_class() {
 		final String id = "data_id_1";
 
 		Member member = this.getMemberTest(this.memberSuccessExampleMasterReadService, id);
@@ -164,23 +175,26 @@ class DatasourceApplicationTests {
 	}
 
 	@Test
-	void 이름으로_회원조회_읽기_쓰기가_다른_클래스에_있는_성공_예제_class_master() {
+	void 이름으로_회원조회_읽기_쓰기가_다른_클래스에_있는_성공_예제_master_class() {
 		final String name = "data_name_1";
 
-		Assertions.assertThrows(IllegalStateException.class, () -> {
-			Member member = this.getMemberNameTest(this.memberSuccessExampleMasterReadService, name);
+		Member member = this.getMemberNameTest(this.memberSuccessExampleMasterReadService, name);
 
-			Assertions.assertEquals(name, member.getName());
-		});
-
+		Assertions.assertEquals(name, member.getName());
 	}
 
+	@Test
+	void 회원가입성공_읽기_쓰기가_다른_클래스에_있는_성공_예제_master_class() {
+		Member member = new Member("data_id_4", "data_name_1", 40);
+
+		this.saveMemberTest(this.memberSuccessExampleMasterReadWriteService, member);
+	}
 
 	/**
 	 * Factory 클래스 이용
 	 */
 	@Test
-	void 회원조회_읽기_쓰기가_다른_클래스에_있는_성공_예제_class_factory_master() {
+	void 회원조회_읽기_쓰기가_다른_클래스에_있는_성공_예제_factory_master_class() {
 		final String id = "data_id_1";
 
 		Member member = this.getMemberTest(this.memberSuccessExampleFactory.getInstance(MemberSuccessExampleMasterReadService.class), id);
@@ -189,7 +203,7 @@ class DatasourceApplicationTests {
 	}
 
 	@Test
-	void 이름으로_회원조회_읽기_쓰기가_다른_클래스에_있는_성공_예제_class_factory_slave() {
+	void 이름으로_회원조회_읽기_쓰기가_다른_클래스에_있는_성공_예제_factory_slave_class() {
 		final String name = "data_name_1";
 
 		Member member = this.getMemberNameTest(this.memberSuccessExampleFactory.getInstance(MemberSuccessExampleSlaveReadService.class), name);
@@ -197,6 +211,35 @@ class DatasourceApplicationTests {
 		Assertions.assertEquals(name, member.getName());
 	}
 
+	/**
+	 * Read/Write 클래스 분리 테스트(Decorator)
+	 */
+	@Test
+	void 회원조회_읽기_쓰기가_다른_클래스에_있는_성공_예제_decorator() {
+		final String id = "data_id_1";
+
+		Member member = this.getMemberTest(this.memberSuccessExampleDecoratorService, id);
+
+		Assertions.assertEquals(id, member.getId());
+	}
+
+	@Test
+	void 이름으로_회원조회_읽기_쓰기가_다른_클래스에_있는_성공_예제_decorator() {
+		final String name = "data_name_1";
+
+		Assertions.assertThrows(IllegalStateException.class, () -> {
+			Member member = this.getMemberNameTest(this.memberSuccessExampleDecoratorService, name);
+
+			Assertions.assertEquals(name, member.getName());
+		});
+	}
+
+	@Test
+	void 회원가입성공_읽기_쓰기가_다른_클래스에_있는_성공_예제_decorator() {
+		Member member = new Member("data_id_4", "data_name_1", 40);
+
+		this.saveMemberTest(this.memberSuccessExampleDecoratorWriteService, member);
+	}
 
 	/**
 	 * private Method

@@ -20,4 +20,13 @@ public interface MemberReadMapper extends MemberRead {
     @Select(value = "SELECT * FROM member WHERE id = #{id}")
     @Override
     Member findId(String id);
+
+    @ConstructorArgs({
+        @Arg(column = "id", javaType = String.class)
+        , @Arg(column = "name", javaType = String.class)
+        , @Arg(column = "age", javaType = Integer.class)
+    })
+    @Select(value = "SELECT * FROM member WHERE name = #{name}")
+    @Override
+    Member findName(String name);
 }

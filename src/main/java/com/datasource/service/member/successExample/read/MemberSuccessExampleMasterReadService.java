@@ -11,8 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
  * <pre>
  *     {@link MemberReadService} 구현체
  *
- *     Master용 Read로 정의한 클래스이기 때문에 추상 클래스에 선언된 slave 트랜잭션 메서드 중 사용하지 않는 메서드들을 예외를 던진다.
- *     추후 필요한 경우에 해당 메서드의 Transactional을 master로 Override 한다.
+ *     Master용 Read로 정의한 클래스이기 때문에 추상 클래스에 선언된 slave 트랜잭션 메서드를 Master 트랜잭션으로 재정의한다.
  * </pre>
  */
 @Service
@@ -22,14 +21,21 @@ public class MemberSuccessExampleMasterReadService extends MemberSuccessExampleR
         super(memberReadMapper);
     }
 
+    /**
+     * {@link MemberReadService#findId(String)}
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Member findId(String id) {
         return super.findId(id);
     }
 
+    /**
+     * {@link MemberReadService#findName(String)}
+     */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Member findName(String name) {
-        throw new IllegalStateException("지원되지 않는 메서드 입니다.");
+        return super.findName(name);
     }
 }

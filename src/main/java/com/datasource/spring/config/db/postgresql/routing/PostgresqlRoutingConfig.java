@@ -1,5 +1,7 @@
 package com.datasource.spring.config.db.postgresql.routing;
 
+import com.datasource.spring.config.mybatis.type.LocalDateTimeTypeHandler;
+import net.sf.log4jdbc.Log4jdbcProxyDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -12,6 +14,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,8 +32,8 @@ public class PostgresqlRoutingConfig {
 
 	public PostgresqlRoutingConfig(DataSource postgresqlMasterDataSource
 			, DataSource postgresqlSlaveDataSource) {
-		this.postgresqlMasterDataSource = postgresqlMasterDataSource;
-		this.postgresqlSlaveDataSource = postgresqlSlaveDataSource;
+		this.postgresqlMasterDataSource = new Log4jdbcProxyDataSource(postgresqlMasterDataSource) ;
+		this.postgresqlSlaveDataSource = new Log4jdbcProxyDataSource(postgresqlSlaveDataSource);
 	}
 
 	/**
@@ -86,6 +89,8 @@ public class PostgresqlRoutingConfig {
         sqlSessionFactoryBean.setDataSource(dataSource);
         sqlSessionFactoryBean.setTypeAliasesPackage("com.datasource.repo.mybatis");
 
+        sqlSessionFactoryBean.getObject().getConfiguration()
+                .getTypeHandlerRegistry().register(LocalDateTime.class, new LocalDateTimeTypeHandler()); // LocalDateTime Mapping 을 위한 typeHandler 추가
         sqlSessionFactoryBean.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);
 
         return sqlSessionFactoryBean.getObject();

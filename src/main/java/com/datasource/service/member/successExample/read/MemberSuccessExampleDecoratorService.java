@@ -29,7 +29,7 @@ public class MemberSuccessExampleDecoratorService implements MemberReadService {
     public Member findId(String id) {
         return Optional.ofNullable(this.memberSuccessExampleFactory.getInstance(MemberSuccessExampleSlaveReadService.class)
                     .findId(id))
-            .orElse(this.memberSuccessExampleFactory.getInstance(MemberSuccessExampleMasterReadService.class)
+            .orElseGet(() -> this.memberSuccessExampleFactory.getInstance(MemberSuccessExampleMasterReadService.class)
                     .findId(id));
     }
 
@@ -40,7 +40,7 @@ public class MemberSuccessExampleDecoratorService implements MemberReadService {
     public Member findName(String name) {
         return Optional.ofNullable(this.memberSuccessExampleFactory.getInstance(MemberSuccessExampleSlaveReadService.class)
                     .findName(name))
-            .orElse(this.memberSuccessExampleFactory.getInstance(MemberSuccessExampleMasterReadService.class)
+                .orElseGet(() -> this.memberSuccessExampleFactory.getInstance(MemberSuccessExampleMasterReadService.class)
                     .findName(name));
     }
 }

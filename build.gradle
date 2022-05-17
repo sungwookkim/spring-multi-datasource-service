@@ -17,6 +17,7 @@ dependencies {
 	runtimeOnly 'org.postgresql:postgresql'
 
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
+	implementation 'org.lazyluke:log4jdbc-remix:0.2.7'
 }
 
 tasks.named('test') {

@@ -14,5 +14,5 @@ public interface NoticeBoardWrite {
      *     게시물 저장 메서드
      * </pre>
      */
-    long insertPosts(Posts posts);
+    void insertPosts(Posts posts);
 }

@@ -20,5 +20,5 @@ public interface FreeBoardWriteMapper extends NoticeBoardWriteMapper {
     @Insert("INSERT INTO free_board(member_id, text) VALUES(#{memberId}, #{text})")
     @Options(useGeneratedKeys = true, keyProperty = "seq", keyColumn = "seq")
     @Override
-    long insertPosts(Posts posts);
+    void insertPosts(Posts posts);
 }

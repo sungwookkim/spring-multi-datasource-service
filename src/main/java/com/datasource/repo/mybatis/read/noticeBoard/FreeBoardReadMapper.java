@@ -16,7 +16,10 @@ import org.apache.ibatis.annotations.Select;
 public interface FreeBoardReadMapper extends NoticeBoardReadMapper {
 
     /**
-     * {@link NoticeBoardRead#findPosts(long)} 자유 게시판 글 조회
+     * <pre>
+     *     {@link NoticeBoardRead#findPosts(long)} 자유 게시판 글 조회
+     * </pre>
+     *
      */
     @ConstructorArgs({
             @Arg(column = "member_id", javaType = String.class)

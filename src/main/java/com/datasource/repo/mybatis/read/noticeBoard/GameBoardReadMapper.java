@@ -7,8 +7,6 @@ import org.apache.ibatis.annotations.ConstructorArgs;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
-import java.time.LocalDateTime;
-
 /**
  * <pre>
  *     {@link NoticeBoardReadMapper} Mybatis용 게임 게시판
@@ -18,7 +16,10 @@ import java.time.LocalDateTime;
 public interface GameBoardReadMapper extends NoticeBoardReadMapper {
 
     /**
-     * {@link NoticeBoardRead#findPosts(long)} 게임 게시판 글 조회
+     * <pre>
+     *     {@link NoticeBoardRead#findPosts(long)} 게임 게시판 글 조회
+     * </pre>
+     *
      */
     @ConstructorArgs({
             @Arg(column = "member_id", javaType = String.class)

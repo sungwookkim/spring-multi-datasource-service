@@ -2,8 +2,9 @@ package com.datasource.service.noticeboard.write.impl;
 
 import com.datasource.enums.NoticeBoardTypeEnum;
 import com.datasource.repo.mybatis.write.noticeBoard.FreeBoardWriteMapper;
+import com.datasource.service.noticeboard.write.NoticeBoardMapperWriteService;
 import com.datasource.service.noticeboard.write.NoticeBoardWriteService;
-import com.datasource.service.noticeboard.write.abs.NoticeBoardWriteServiceAbs;
+import com.datasource.service.noticeboard.write.abs.NoticeBoardMapperWriteServiceAbs;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
  * </pre>
  */
 @Service
-public class FreeBoardWriteService extends NoticeBoardWriteServiceAbs implements NoticeBoardWriteService {
+public class FreeBoardWriteService extends NoticeBoardMapperWriteServiceAbs implements NoticeBoardMapperWriteService {
 
     public FreeBoardWriteService(FreeBoardWriteMapper freeBoardWriteMapper) {
         super(freeBoardWriteMapper, NoticeBoardTypeEnum.FREE_BOARD);

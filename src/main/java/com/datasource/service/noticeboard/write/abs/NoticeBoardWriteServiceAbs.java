@@ -31,9 +31,10 @@ public abstract class NoticeBoardWriteServiceAbs implements NoticeBoardWriteServ
     @Override
     public long insertPosts(Posts posts) {
         this.noticeBoardWriteMapper.insertPosts(posts);
-        this.noticeBoardWriteMapper.insertPostsControl(new NoticeBoardControl(posts.getSeq(), this.noticeBoardTypeEnum));
+
+        NoticeBoardControl noticeBoardControl = new NoticeBoardControl(posts.getSeq(), this.noticeBoardTypeEnum);
+        this.noticeBoardWriteMapper.insertPostsControl(noticeBoardControl);
 
         return posts.getSeq();
     }
-
 }

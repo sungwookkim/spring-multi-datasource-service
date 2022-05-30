@@ -34,3 +34,12 @@ CREATE TABLE public.notice_board_control (
     registration_date timestamp NOT NULL DEFAULT now(),
     CONSTRAINT notice_board_control_pk PRIMARY KEY (seq)
 );
+
+DROP TABLE IF EXISTS public.free_board_control;
+CREATE TABLE public.free_board_control (
+    seq bigserial NOT NULL,
+    reference_seq int8 NOT NULL,
+    notice_board_type varchar(10) NOT NULL,
+    registration_date timestamp NOT NULL DEFAULT now(),
+    CONSTRAINT free_board_control_pk PRIMARY KEY (seq)
+);
